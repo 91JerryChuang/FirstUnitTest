@@ -73,6 +73,17 @@ namespace FirstUnitTest.BL.Services.Ticket
                     }
                 }
 
+                //// 檢查有效的資料在該檔案內是否重複
+                if (status == TicketSlaveStatusEnum.Normal)
+                {
+                    var isUnique = verificationCodeHashSet.Add($"{codeList[0]},{codeList[1]},{codeList[2]}");
+                    if (isUnique == false)
+                    {
+                        status = TicketSlaveStatusEnum.ExistInSameFile;
+                        row["TicketSlave_StatusTypeDef"] = status.ToString();
+                    }
+                }
+
                 if (status != TicketSlaveStatusEnum.Normal)
                 {
                     var invalidationData = string.Join(",", codeList).TrimEnd(',');
