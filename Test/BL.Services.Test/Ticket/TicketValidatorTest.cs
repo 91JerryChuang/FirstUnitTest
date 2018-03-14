@@ -12,11 +12,45 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
     public class TicketValidatorTest
     {
         /// <summary>
-        /// 驗證檢查條碼檔案資料，三組條碼格式為CODE_128，驗證通過
+        /// 驗證檢查碼檔案資料，三組條碼格式為CODE_128，其中一筆資料長度超過上限
         /// </summary>
         [Fact]
-        public void Test_CheckFileData_ThreeCode128_Validation()
+        public void Test_CheckFileData_ThreeCode128_HasOneData_CodeLengthOverLimit_Invalidation()
         {
+            //// Arrange
+            var stubTicketEntity = new TicketEntity
+            {
+                BarCodeTypeDef = "CODE_128",
+                CodeNumber = 3
+            };
+
+            var sourceDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+
+            sourceDataTable.Rows[1]["TicketSlave_Code2"] = "123456789012345678901";
+
+            var expectedDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+            expectedDataTable.Rows[1]["TicketSlave_Code2"] = "123456789012345678901";
+
+            expectedDataTable.Rows[1]["TicketSlave_StatusTypeDef"] =
+                TicketSlaveStatusEnum.CodeLengthOverLimit;
+
+            expectedDataTable.Rows[1]["TicketSlave_InvalidationData"] =
+                string.Format(
+                    "{0},{1},{2}",
+                    expectedDataTable.Rows[1]["TicketSlave_Code1"],
+                    expectedDataTable.Rows[1]["TicketSlave_Code2"],
+                    expectedDataTable.Rows[1]["TicketSlave_Code3"]);
+
+            var target = new TicketValidator();
+
+            //// Act
+            target.CheckFileData(stubTicketEntity, sourceDataTable);
+
+            //// Assert
+            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
+            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
+
+            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
         }
 
         /// <summary>
