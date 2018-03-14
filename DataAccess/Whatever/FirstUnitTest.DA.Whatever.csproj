@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1FF93055-EE26-4942-B444-2030803C9D48}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{6DF7D960-5D3E-437F-907A-1EAEDF720CFA}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FirstUnitTest.ConsoleMode</RootNamespace>
-    <AssemblyName>FirstUnitTest.ConsoleMode</AssemblyName>
+    <RootNamespace>FirstUnitTest.DA.Whatever</RootNamespace>
+    <AssemblyName>FirstUnitTest.DA.Whatever</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,24 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ticket\ITicketRepository.cs" />
+    <Compile Include="Ticket\TicketRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BE\FirstUnitTest.BL.BE.csproj">
+    <ProjectReference Include="..\..\BusinessLogic\BE\FirstUnitTest.BL.BE.csproj">
       <Project>{79759b76-7409-4094-b1e8-c4aa4cf413e4}</Project>
       <Name>FirstUnitTest.BL.BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BusinessLogic\Services\FirstUnitTest.BL.Services.csproj">
-      <Project>{9c7b809f-8634-49da-9049-75957a45057a}</Project>
-      <Name>FirstUnitTest.BL.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataAccess\Whatever\FirstUnitTest.DA.Whatever.csproj">
-      <Project>{6df7d960-5d3e-437f-907a-1eaedf720cfa}</Project>
-      <Name>FirstUnitTest.DA.Whatever</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
