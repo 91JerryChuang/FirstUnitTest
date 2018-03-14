@@ -12,6 +12,35 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
     public class TicketValidatorTest
     {
         /// <summary>
+        /// 驗證檢查條碼檔案資料，三組條碼格式為CODE_128，驗證通過
+        /// </summary>
+        [Fact]
+        public void Test_CheckFileData_ThreeCode128_Validation()
+        {
+            //// Arrange
+            var stubTicketEntity = new TicketEntity
+            {
+                BarCodeTypeDef = "CODE_128",
+                CodeNumber = 3
+            };
+
+            var sourceDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+
+            var expectedDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+
+            var target = new TicketValidator();
+
+            //// Act
+            target.CheckFileData(stubTicketEntity, sourceDataTable);
+
+            //// Assert
+            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
+            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
+
+            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+        }
+
+        /// <summary>
         /// 驗證檢查碼檔案資料，三組條碼格式為CODE_128，其中一筆資料長度超過上限
         /// </summary>
         [Fact]
