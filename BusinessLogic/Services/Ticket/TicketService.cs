@@ -39,6 +39,14 @@ namespace FirstUnitTest.BL.Services.Ticket
         /// <param name="id">票券主檔序號</param>
         public void InsertSlave(long id)
         {
+            var ticketEntity = this._ticketRepository.Get(id);
+
+            //// 讀取檔案內容
+            var ticketCodeData = this.LoadFile(ticketEntity);
+
+            this._ticketValidator.CheckFileData(ticketEntity, ticketCodeData);
+
+            this._ticketRepository.InsertSlave(ticketCodeData);
         }
         
         /// <summary>
