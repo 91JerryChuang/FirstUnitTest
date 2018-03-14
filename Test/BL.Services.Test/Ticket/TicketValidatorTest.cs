@@ -96,6 +96,91 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
         }
 
         /// <summary>
+        /// 驗證檢查條碼檔案資料，三組條碼格式為CODE_128，其中一筆資料長度超過上限且不符合CODE_128的格式，只會有長度超過上限的錯誤
+        /// </summary>
+        [Fact]
+        public void Test_CheckFileData_ThreeCode128_HasOneData_CodeLengthOverLimit_And_InvalidationCodeFormat_Invalidation()
+        {
+            //// Arrange
+            var stubTicketEntity = new TicketEntity
+            {
+                BarCodeTypeDef = "CODE_128",
+                CodeNumber = 3
+            };
+
+            var sourceDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+
+            sourceDataTable.Rows[1]["TicketSlave_Code2"] = "12345678901234567890九易App0001";
+
+            var expectedDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+            expectedDataTable.Rows[1]["TicketSlave_Code2"] = "12345678901234567890九易App0001";
+
+            expectedDataTable.Rows[1]["TicketSlave_StatusTypeDef"] =
+                TicketSlaveStatusEnum.CodeLengthOverLimit;
+
+            expectedDataTable.Rows[1]["TicketSlave_InvalidationData"] =
+                string.Format(
+                    "{0},{1},{2}",
+                    expectedDataTable.Rows[1]["TicketSlave_Code1"],
+                    expectedDataTable.Rows[1]["TicketSlave_Code2"],
+                    expectedDataTable.Rows[1]["TicketSlave_Code3"]);
+
+            var target = new TicketValidator();
+
+            //// Act
+            target.CheckFileData(stubTicketEntity, sourceDataTable);
+
+            //// Assert
+            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
+            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
+
+            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+        }
+
+        /// <summary>
+        /// 驗證檢查條碼檔案資料，三組條碼格式為CODE_128，略過無效資料
+        /// </summary>
+        [Fact]
+        public void Test_CheckFileData_ThreeCode128_Ignore_InvalidationData()
+        {
+            //// Arrange
+            var stubTicketEntity = new TicketEntity
+            {
+                BarCodeTypeDef = "CODE_128",
+                CodeNumber = 3
+            };
+
+            var sourceDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+            sourceDataTable.Rows[1]["TicketSlave_Code1"] = string.Empty;
+            sourceDataTable.Rows[1]["TicketSlave_Code2"] = string.Empty;
+            sourceDataTable.Rows[1]["TicketSlave_Code3"] = string.Empty;
+            sourceDataTable.Rows[1]["TicketSlave_StatusTypeDef"] =
+                TicketSlaveStatusEnum.InvalidationData;
+            sourceDataTable.Rows[1]["TicketSlave_InvalidationData"] =
+                "無效資料,無效資料,無效資料,無效資料";
+
+            var expectedDataTable = this.GeneratorThreeBarCode128BaseDataTable();
+            expectedDataTable.Rows[1]["TicketSlave_Code1"] = string.Empty;
+            expectedDataTable.Rows[1]["TicketSlave_Code2"] = string.Empty;
+            expectedDataTable.Rows[1]["TicketSlave_Code3"] = string.Empty;
+            expectedDataTable.Rows[1]["TicketSlave_StatusTypeDef"] =
+                TicketSlaveStatusEnum.InvalidationData;
+            expectedDataTable.Rows[1]["TicketSlave_InvalidationData"] =
+                "無效資料,無效資料,無效資料,無效資料";
+
+            var target = new TicketValidator();
+
+            //// Act
+            target.CheckFileData(stubTicketEntity, sourceDataTable);
+
+            //// Assert
+            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
+            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
+
+            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+        }
+
+        /// <summary>
         /// 產生條碼檔案資料，三組條碼格式為CODE_128的基本資料
         /// </summary>
         /// <returns>條碼檔案資料，三組條碼格式為CODE_128的基本資料</returns>
