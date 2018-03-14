@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1FF93055-EE26-4942-B444-2030803C9D48}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{9C7B809F-8634-49DA-9049-75957A45057A}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FirstUnitTest.ConsoleMode</RootNamespace>
-    <AssemblyName>FirstUnitTest.ConsoleMode</AssemblyName>
+    <RootNamespace>FirstUnitTest.BL.Services</RootNamespace>
+    <AssemblyName>FirstUnitTest.BL.Services</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,26 +39,35 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZXing.Net.0.16.2\lib\net461\zxing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZXing.Net.0.16.2\lib\net461\zxing.presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ticket\ITicketService.cs" />
+    <Compile Include="Ticket\ITicketValidator.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Ticket\TicketService.cs" />
+    <Compile Include="Ticket\TicketValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BE\FirstUnitTest.BL.BE.csproj">
-      <Project>{79759b76-7409-4094-b1e8-c4aa4cf413e4}</Project>
-      <Name>FirstUnitTest.BL.BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BusinessLogic\Services\FirstUnitTest.BL.Services.csproj">
-      <Project>{9c7b809f-8634-49da-9049-75957a45057a}</Project>
-      <Name>FirstUnitTest.BL.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataAccess\Whatever\FirstUnitTest.DA.Whatever.csproj">
+    <ProjectReference Include="..\..\DataAccess\Whatever\FirstUnitTest.DA.Whatever.csproj">
       <Project>{6df7d960-5d3e-437f-907a-1eaedf720cfa}</Project>
       <Name>FirstUnitTest.DA.Whatever</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BE\FirstUnitTest.BL.BE.csproj">
+      <Project>{79759b76-7409-4094-b1e8-c4aa4cf413e4}</Project>
+      <Name>FirstUnitTest.BL.BE</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
