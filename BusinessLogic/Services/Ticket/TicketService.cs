@@ -46,7 +46,7 @@ namespace FirstUnitTest.BL.Services.Ticket
         /// </summary>
         /// <param name="ticketEntity">票券主檔資料</param>
         /// <returns>csv檔案的內容</returns>
-        private DataTable LoadFile(TicketEntity ticketEntity)
+        protected virtual DataTable LoadFile(TicketEntity ticketEntity)
         {
             //// 檔案儲存路徑
             var ticketFilePath = ConfigurationManager.AppSettings["Ticket.File.Path"];

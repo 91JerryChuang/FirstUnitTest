@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ticket\StubTicketService.cs" />
     <Compile Include="Ticket\TicketServiceTest.cs" />
     <Compile Include="Ticket\TicketValidatorTest.cs" />
   </ItemGroup>
