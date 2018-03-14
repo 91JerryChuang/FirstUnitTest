@@ -31,13 +31,7 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
             var target = new TicketValidator();
 
             //// Act
-            target.CheckFileData(stubTicketEntity, sourceDataTable);
-
-            //// Assert
-            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
-            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
-
-            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
         }
 
         /// <summary>
@@ -70,16 +64,8 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
                     expectedDataTable.Rows[1]["TicketSlave_Code2"],
                     expectedDataTable.Rows[1]["TicketSlave_Code3"]);
 
-            var target = new TicketValidator();
-
             //// Act
-            target.CheckFileData(stubTicketEntity, sourceDataTable);
-
-            //// Assert
-            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
-            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
-
-            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
         }
 
         /// <summary>
@@ -112,16 +98,8 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
                     expectedDataTable.Rows[1]["TicketSlave_Code2"],
                     expectedDataTable.Rows[1]["TicketSlave_Code3"]);
 
-            var target = new TicketValidator();
-
             //// Act
-            target.CheckFileData(stubTicketEntity, sourceDataTable);
-
-            //// Assert
-            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
-            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
-
-            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
         }
 
         /// <summary>
@@ -154,16 +132,8 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
                     expectedDataTable.Rows[1]["TicketSlave_Code2"],
                     expectedDataTable.Rows[1]["TicketSlave_Code3"]);
 
-            var target = new TicketValidator();
-
             //// Act
-            target.CheckFileData(stubTicketEntity, sourceDataTable);
-
-            //// Assert
-            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
-            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
-
-            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
         }
 
         /// <summary>
@@ -197,16 +167,8 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
             expectedDataTable.Rows[1]["TicketSlave_InvalidationData"] =
                 "無效資料,無效資料,無效資料,無效資料";
 
-            var target = new TicketValidator();
-
             //// Act
-            target.CheckFileData(stubTicketEntity, sourceDataTable);
-
-            //// Assert
-            var expectedItemArray = expectedDataTable.AsEnumerable().Select(x => x.ItemArray);
-            var actualItemArray = sourceDataTable.AsEnumerable().Select(x => x.ItemArray);
-
-            actualItemArray.ShouldBeEquivalentTo(expectedItemArray);
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
         }
 
         /// <summary>
@@ -249,6 +211,23 @@ namespace FirstUnitTest.BL.Services.Test.Ticket
                     expectedDataTable.Rows[1]["TicketSlave_Code2"],
                     expectedDataTable.Rows[1]["TicketSlave_Code3"]);
 
+            var target = new TicketValidator();
+
+            //// Act
+            this.DoActAndAssert(stubTicketEntity, sourceDataTable, expectedDataTable);
+        }
+
+        /// <summary>
+        /// 執行Validate和驗證結果
+        /// </summary>
+        /// <param name="stubTicketEntity">測試目標Validate方法參數</param>
+        /// <param name="sourceDataTable">實際結果</param>
+        /// <param name="expectedDataTable">預期結果</param>
+        private void DoActAndAssert(
+            TicketEntity stubTicketEntity,
+            DataTable sourceDataTable,
+            DataTable expectedDataTable)
+        {
             var target = new TicketValidator();
 
             //// Act
