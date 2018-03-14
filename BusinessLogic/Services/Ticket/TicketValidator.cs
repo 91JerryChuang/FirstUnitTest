@@ -54,6 +54,12 @@ namespace FirstUnitTest.BL.Services.Ticket
                     throw new ArgumentException(errorMessage);
                 }
 
+                //// 狀態為無效資料，無需進行檢查
+                if (status == TicketSlaveStatusEnum.InvalidationData)
+                {
+                    continue;
+                }
+
                 //// 依據條碼組數設定，決定要檢查到第幾組條碼
                 for (int index = 0; index < barCodeNumber; index++)
                 {
